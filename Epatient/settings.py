@@ -28,7 +28,7 @@ SECRET_KEY = 'h&)l@583e2$cp0uiv#i+th17(b+m4z_1=k2pyuv^4cdpx*jisu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['e-patient.co',u'e-patient.co','159.89.220.187','localhost']
+ALLOWED_HOSTS = ['e-patient.co',u'e-patient.co','159.89.220.187','localhost','*']
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Application definition
@@ -118,14 +118,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-SMS_SID = 'xxx'
-SMS_TOKEN = 'xxx'
-SMS_FROM_PHONE = 'xxx'
+SMS_SID = 'AC93347a234d4f1e30e1abd3366488364d'
+SMS_TOKEN = '1dabaebf1113627102d0cc39f0251c04'
+SMS_FROM_PHONE = '+13212443412'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-FROM_EMAIL = ''
-EMAIL_PASSWORD = ''
+FROM_EMAIL = 'y.ayat@ump.ac.ma'
+EMAIL_PASSWORD = 'yassine123'
 
 
 VERIFY_TIME = 500

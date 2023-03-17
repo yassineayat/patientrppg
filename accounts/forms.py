@@ -27,11 +27,11 @@ class SingupForm(ModelForm):
             'postcode': forms.TextInput(attrs={'class': 'form-control','placeholder':'Please type post code'}),
             'address': forms.TextInput(attrs={'class': 'form-control','placeholder':'Please type address'}),
             'practice': forms.Textarea(attrs={'class': 'form-control','placeholder':'Please type your practice'}),
-
             'useremail': forms.TextInput(attrs={'class': 'form-control','type':'email','placeholder':'Please type your email'}),
             'password': forms.TextInput(attrs={'class': 'form-control','type':'password','placeholder':'Please type your password'}),
             'phone_number': forms.TextInput(attrs={'class': 'form-control','placeholder':'Please type your phone number'}),
-            'user_type':forms.TextInput(attrs={'type':'hidden','value':PATIENT})
+            # 'user_type': forms.Select(attrs={'class': 'form-control select2-single'}, choices=USER_IN_HOSPITAL_CHOICES),
+            'user_type':forms.Select(attrs={'class': 'form-control select2-single','value':USER_IN_HOSPITAL_CHOICES}),
         }
     def save(self, commit=True):
         user  = super(ModelForm, self).save(commit=False)

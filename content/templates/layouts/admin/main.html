@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -160,7 +160,7 @@
                     aria-expanded="false">
                     <span id="userinfo">{{request.session.username}}</span>
                     <span>
-                        <img alt="Profile Picture" src="{% static 'img/profile-pic-l.jpg' %}" />
+                        <img alt="Profile Picture" src="{% static 'img/admin.png' %}" />
                     </span>
                 </button>
 

@@ -1,3 +1,5 @@
+import os
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.hashers import make_password,check_password
 from accounts.models import User
@@ -15,8 +17,9 @@ import json
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
-# Create your views here.
-
+account_sid = "AC93347a234d4f1e30e1abd3366488364d"
+auth_token = "1dabaebf1113627102d0cc39f0251c04"
+client = Client(account_sid, auth_token)
 def signin(request):
     if request.method == "GET":
         return render(request,'auth/login.html')
@@ -88,12 +91,13 @@ def verify_phone(request):
     try:
         email = request.session['temp_email']
         user = User.objects.get(useremail=email)
-#        message = client.messages \
-#                .create(
-#                     body="E-Patient verify code. \n" + user.verify_code ,
-#                     from_=settings.SMS_FROM_PHONE,
-#                     to=user.phone_number
-#                 )
+
+        # message = client.messages \
+        #        .create(
+        #             body="E-Patient verify code. \n" + user.verify_code ,
+        #             from_=settings.SMS_FROM_PHONE,
+        #             to=user.phone_number
+        #         )
 
         return render(request,'auth/verify.html',{'phone_number':user.phone_number})
     except Exception:
@@ -152,12 +156,12 @@ def resend_code(request):
             server.sendmail(settings.FROM_EMAIL,email, msg.as_string())
             server.quit()
 
-#        message = client.messages \
-#                .create(
-#                     body="E-Patient verify code. \n" + code ,
-#                     from_=settings.SMS_FROM_PHONE,
-#                     to=user.phone_number
-#                 )
+            # message = client.messages \
+            #    .create(
+            #         body="E-Patient verify code. \n" + code ,
+            #         from_=settings.SMS_FROM_PHONE,
+            #         to=user.phone_number
+            #     )
         response_data['status'] = 'sent'
         return HttpResponse(json.dumps(response_data),content_type="application/json")
     except Exception:
@@ -189,3 +193,13 @@ def verify_email(request):
     except Exception:
         pass
     return redirect('accounts:sign_up')
+
+
+# from django.shortcuts import HttpResponse
+#
+# # Create your views here.
+# import subprocess
+#
+# def p(request):
+#     subprocess.call(['python', 'rPPG/run.py'])
+#     return HttpResponse("hello ok")

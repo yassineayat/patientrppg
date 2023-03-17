@@ -1,5 +1,5 @@
 {% extends 'layouts/medical/main.html' %}
-{% load staticfiles %}
+{% load static %}
 {% block content %}
 <div class="container-fluid">
     <div class="row">
@@ -13,21 +13,25 @@
         <div class="card">
             <div class="card-header pl-0 pr-0">
                 <ul class="nav nav-tabs card-header-tabs  ml-0 mr-0" role="tablist">
-                    <li class="nav-item w-25 text-center">
+                    <li class="nav-item w-20 text-center">
                         <a class="nav-link active" id="first-tab_" data-toggle="tab" href="#firstFull"
                             role="tab" aria-controls="first" aria-selected="true" onclick="selectTab(1)">Patient Details</a>
                     </li>
-                    <li class="nav-item w-25 text-center">
+                    <li class="nav-item w-20 text-center">
                         <a class="nav-link" id="second-tab_" data-toggle="tab" href="#secondFull"
                             role="tab" aria-controls="second" aria-selected="false" onclick="selectTab(2)">Problems</a>
                     </li>
-                    <li class="nav-item w-25 text-center">
+                    <li class="nav-item w-20 text-center">
                         <a class="nav-link" id="third-tab_" data-toggle="tab" href="#thirdFull"
                             role="tab" aria-controls="third" aria-selected="false" onclick="selectTab(3)">Medications</a>
                     </li>
-                    <li class="nav-item w-25 text-center">
+                    <li class="nav-item w-20 text-center">
                             <a class="nav-link" id="forth-tab_" data-toggle="tab" href="#forthFull"
                             role="tab" aria-controls="forth" aria-selected="false" onclick="selectTab(4)">Test Results</a>
+                    </li>
+                     <li class="nav-item w-20 text-center">
+                            <a class="nav-link" id="fifth-tab_" data-toggle="tab" href="#fifthFull"
+                            role="tab" aria-controls="fifth" aria-selected="false" onclick="selectTab(5)">rPPG</a>
                     </li>
     
                     
@@ -161,6 +165,72 @@
                         
 
                     </div>
+
+
+                     <div class="tab-pane fade" id="fifthFull" role="tabpanel" aria-labelledby="fifth-tab_">
+
+                            <div class="col-md-2">
+                                    <br>
+                                    <button type="button" class="btn btn-success btn-sm mb-1" onclick="addTest()">Add New</button>
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="row">
+                                    {% if tests %}
+                                        {% for model in tests %}
+                                            <div class="col-md-10">
+                                                <div class="mb-4">
+                                                    <br>
+                                                        <p class="list-item-heading mb-1 color-theme-1">{{model.pub_date}} </p>
+                                                        <p class="mb-4 text-small">{{model.name}}</p>
+                                                        <p class="mb-4 text-small">{{model.description}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2" style="margin-top:25px;">
+                                                <button type="button" class="btn btn-danger btn-sm mb-1" onclick="editTest({{model.pk}})">Edit</button>
+                                            </div>
+
+                                            <div class="col-md-12 separator"></div>
+                                        {% endfor %}
+                                    {% endif %}
+
+                                </div>
+
+
+
+                    </div>
+
+
+{#                    rppg medical#}
+{#                         <div class="tab-pane fade" id="fifthFull" role="tabpanel" aria-labelledby="fifth-tab_">#}
+{#                        <div class="col-md-2">#}
+{#                            <br>#}
+{#                            <button type="button" class="btn btn-success btn-sm mb-1" onclick="addProblem()">Add New</button>#}
+{#                            <br>#}
+{#                            <br>#}
+{#                        </div>#}
+{#                        <div class="row">#}
+{#                            {% if rppgs %}#}
+{#                                {% for model in rppgs %}#}
+{#                                    <div class="col-md-10">#}
+{#                                        <div class="mb-4">#}
+{#                                            <br>#}
+{#                                                <p class="list-item-heading mb-1 color-theme-1">{{model.pub_date}} </p>#}
+{#                                                <p class="mb-4 text-small">{{model.description}}</p>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="col-md-2" style="margin-top:25px;">#}
+{#                                        <button type="button" class="btn btn-danger btn-sm mb-1" onclick="editProblem({{model.pk}})">Edit</button>#}
+{#                                    </div>#}
+{##}
+{#                                    <div class="col-md-12 separator"></div>#}
+{#                                {% endfor %}#}
+{#                            {% endif %}#}
+{##}
+{#                        </div>#}
+{##}
+{#                    </div>#}
+{#                fin rppG medical #}
     
                 </div>
             </div>
@@ -359,6 +429,73 @@
                         </div>
                     </div>
                 </div>
+
+
+ <div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalContentLabel">Test Details</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" id="testPK">
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label"><b>Test Name:</b></label>
+                                    <input class="form-control" id="testName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label"><b>Description</b></label>
+                                    <textarea class="form-control" id="test-decription"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label"><b>Result:</b></label>
+                                    <input class="form-control" id="result">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" onclick="saveTest()">Save</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="addTestModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalContentLabel">Test Details</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label"><b>Test Name:</b></label>
+                                    <input class="form-control" id="addTestName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label"><b>Description</b></label>
+                                    <textarea class="form-control" id="add-test-decription"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label"><b>Result:</b></label>
+                                    <input class="form-control" id="addResult">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" onclick="createTest()">Save</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
     
 </div>
 

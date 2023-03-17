@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -154,7 +154,7 @@
                     aria-expanded="false">
                     <span id="userinfo">{{request.session.username}}</span>
                     <span>
-                        <img alt="Profile Picture" src="{% static 'img/profile-pic-l.jpg' %}" />
+                        <img alt="Profile Picture" src="{% static 'img/doc.png' %}" />
                     </span>
                 </button>
 
@@ -258,7 +258,7 @@
                                     <span>Appointment</span>
                                 </a>
                             </li>
-                            <li {% if request.path == "/patient-info" or request.path == "/healthinfo/users" or request.path == "/patient-info-user" %}class = "active" {% endif %}>
+                            <li {% if request.path == "/patient-info" or request.path == "/healthinfo/users" or request.path == "/patient-info-user"   %}class = "active" {% endif %}>
                                 <a href="{% url 'main:user_info' %}">
                                     <i class="glyph-icon simple-icon-heart"></i> Health Info
                                 </a>
@@ -309,6 +309,11 @@
                             <li {% if request.path == "/healthinfo/tests" %}class="active" {% endif %}>
                                 <a href="{% url 'main:tests' %}">
                                     <i class="glyph-icon simple-icon-book-open"></i> Test Results
+                                </a>
+                            </li>
+                              <li {% if request.path == "/healthinfo/blank" %}class="active" {% endif %}>
+                                <a href="{% url 'main:blank' %}">
+                                    <i class="glyph-icon simple-icon-info"></i> rPPG
                                 </a>
                             </li>
                         </ul>

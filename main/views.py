@@ -1,12 +1,14 @@
 from __future__ import unicode_literals
 
+import subprocess
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core import serializers
 from django.contrib.auth.hashers import make_password
 
 from accounts.models import User
-from main.models import Appointment,Problem,Medication, Test
+from main.models import Appointment, Problem, Medication, Test, rPPGe
 from django.db.models import Q
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
@@ -207,7 +209,7 @@ def search_problems(request):
     end = end - timedelta(days=1)
 
     problems = Problem.objects.filter(pub_date__gte = first).filter(pub_date__lte = end)
-    print(problems)
+    print("problems :",problems)
     if len(problems) > 0:
         serialized_queryset = serializers.serialize('json', problems)
         return HttpResponse(json.dumps(serialized_queryset),content_type="application/json")
@@ -265,6 +267,9 @@ def medications_detail(request):
 def tests(request):
     return render(request,"main/patient/tests.html")
 
+
+
+
 # get test results for selected month
 def search_tests(request):
 
@@ -292,6 +297,39 @@ def tests_detail(request):
         response['description'] = test.description    
         response['name'] = test.name
         response['result'] = test.result
+    except Exception:
+        response['doctor'] = 'error'
+    return HttpResponse(json.dumps(response),content_type="application/json")
+
+
+def RPPG(request):
+    subprocess.call(['python', 'rPPG/run.py'])
+    return render(request,"main/patient/ser.html")
+def search_rPPG(request):
+    now  = datetime.now()
+    first = datetime(int(request.GET['year']),int(request.GET['month']),1,0,0,0)
+    end = first+relativedelta(months=+1)
+    end = end - timedelta(days=1)
+
+    rppgs = rPPGe.objects.filter(pub_date__gte = first).filter(pub_date__lte = end)
+    print("test rppg")
+    print("rppg data :",rppgs)
+    if len(rppgs) > 0:
+        serialized_queryset = serializers.serialize('json',rppgs)
+        return HttpResponse(json.dumps(serialized_queryset),content_type="application/json")
+    return HttpResponse(json.dumps(""),content_type="application/json")
+
+#get details for selected problem
+def rPPG_detail(request):
+    response = {}
+    try:
+        pk = request.GET['pk']
+        rppg = rPPGe.objects.get(id=pk)
+        doctor_id = rppg.doctor_id
+        doctor = User.objects.get(id=doctor_id)
+        response['doctor'] = doctor.first_name + " " + doctor.last_name
+        response['pub_date'] = rppg.pub_date.strftime('%Y-%m-%d')
+        response['description'] = rppg.description
     except Exception:
         response['doctor'] = 'error'
     return HttpResponse(json.dumps(response),content_type="application/json")
@@ -360,8 +398,9 @@ def patient_info(request):
         tests = Test.objects.filter(user_id = user_id)
         medications = Medication.objects.filter(user_id = user_id)
         problems = Problem.objects.filter(user_id = user_id)
-
-        return render(request,"main/medical/patient_info.html",{"patient_data":patient_data,"tests":tests,"medications":medications,"problems":problems})
+        rppgs = rPPGe.objects.all()
+        print(rppgs)
+        return render(request,"main/medical/patient_info.html",{"patient_data":patient_data,"tests":tests,"medications":medications,"problems":problems,"rppgs":rppgs})
     except Exception:
         pass    
     return redirect("main:dashboard")

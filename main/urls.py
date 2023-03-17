@@ -51,6 +51,9 @@ urlpatterns = [
     path('search-tests', views.search_tests,name='search_tests'),
     path('tests-detail', views.tests_detail,name='tests_detail'),
 
+    path('healthinfo/blank',views.RPPG,name='blank'),
+    path('search-rppg', views.search_rPPG,name='search_rppg'),
+    path('rppg-detail', views.rPPG_detail,name='rppg_detail'),
 ######################################################################################################
     path('incoming-requested', views.incoming_requested,name='incoming_requested'),
     path('appointment/requested-appoint', views.requested_appoint,name='requested_appoint'),

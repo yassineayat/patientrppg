@@ -52,7 +52,13 @@ class Test(models.Model):                   #Test model
     description = models.TextField()
     result = models.CharField(max_length = 200)
     pub_date=models.DateField(auto_now_add=True)
-    
+
+
+class rPPGe(models.Model):                #Problem model
+    user_id = models.IntegerField()
+    doctor_id = models.IntegerField()
+    description = models.ImageField()
+    pub_date = models.DateField(auto_now_add=True)
 
     
     

@@ -7,7 +7,7 @@
 
     <title>E-Patient | A Patient Management System</title>
 
-    {% load staticfiles %}
+    {% load static %}
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'assets-landing/css/bootstrap.min.css' %}" >
     <!-- Icon -->
@@ -32,7 +32,7 @@
       <nav class="navbar navbar-expand-md bg-inverse fixed-top scrolling-navbar">
         <div class="container">
           <!-- Brand and toggle get grouped for better mobile display -->
-          <a href="{% static 'main:index' %}" class="navbar-brand"><img src="{% static 'assets-landing/img/logo.png' %}" alt="" width=""></a>       
+          <a href="{% static 'main:index' %}" class="navbar-brand"><img src="{% static 'assets-landing/img/l.png' %}" alt="" width=""></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <i class="lni-menu"></i>
           </button>
@@ -70,13 +70,13 @@
                 <h2 class="head-title">Book Appointments &amp;<br>
                   View Health Records<br>
                 All In One Place</h2>
-                <p>Taking care of your health is essential. We've designed a system to allow you to book apointments, view your health records and manage your NHS prescriptions.</p>
+                <p>Taking care of your health is essential. We've designed a system to allow you to book apointments, view your health records.</p>
                 <div class="header-button"><a href="{% url 'accounts:sign_in' %}" class="btn btn-common">SIGN IN</a> <a href="{% url 'accounts:sign_up' %}" class="btn btn-border video-popup">REGISTER</a></div>
               </div>
             </div>
-            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
-              <div class="intro-img"> </div>            
-            </div>
+{#            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">#}
+{#              <div class="intro-img"> </div>            #}
+{#            </div>#}
           </div> 
         </div> 
       </div>
@@ -132,9 +132,9 @@
           <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 col-mb-12">
               <div class="widget">
-                <h3 class="footer-logo col-lg-12"><img src="{% static 'assets-landing/img/logo.png' %}" alt="" class="img-fluid"></h3>
+                <h3 class="footer-logo col-lg-12"><img src="{% static 'assets-landing/img/l.png' %}" alt="" class="img-fluid"></h3>
                 <div class="textwidget">
-                  <p>A Secure Patient Management System. This is a Final Year Project created by Ameen Zinga.</p>
+                  <p>Patient Management System.</p>
                 </div>
 </div>
             </div>
@@ -171,7 +171,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="copyright-content">
-                <p>Copyright © 2019 E-Patient All Rights Reserved. Created by Ameen Zinga as for a University of Westminster Final Year Project.</p>
+                <p>Copyright ©</p>
               </div>
             </div>
           </div>
